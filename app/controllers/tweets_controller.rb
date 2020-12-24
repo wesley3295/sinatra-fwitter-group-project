@@ -1,17 +1,20 @@
 class TweetsController < ApplicationController
 
     get '/tweets' do
-        @current_user = User.find_by_id(session[:user_id])
-        if @current_user
-         erb :'/tweets/index' 
+        @tweets = Tweet.all
+        if logged_in?
+              erb :'/tweets/index'
         else
-            erb :'/tweets/error' 
+           redirect '/login'
         end
-        
     end
 
     get '/tweets/new' do
         erb :'/tweets/new'
     end
 
+    post '/tweets' do
+        tweet = Tweet.create(content: params[:content])
+        redirect '/tweets'
+    end
 end

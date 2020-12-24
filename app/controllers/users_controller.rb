@@ -16,9 +16,7 @@ class UsersController < ApplicationController
         end
     end
 
-    get '/logout' do
-        erb :'/users/logout' 
-    end
+    
 
     post '/signup' do
         if params[:username] == "" || params[:email] == "" || params[:password] == ""
@@ -42,8 +40,13 @@ class UsersController < ApplicationController
         end
       end
 
-    post '/logout' do
-        session.clear
-        redirect '/'
+get '/logout' do
+        if logged_in?
+            session.clear
+            redirect '/login'
+        else
+           redirect '/'
+        end
     end
+ 
 end
